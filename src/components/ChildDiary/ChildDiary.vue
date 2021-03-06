@@ -1,15 +1,10 @@
 <template>
 
 
-  <div v-if="!showForm">
-    <button class="btn btn-primary" @click="showForm = !showForm">Добавить ребенка</button>
-    <span> {{ child.name }} </span>
-    <span>{{ child.dateOfBirth }} </span>
-    <span>{{ child.gender }}</span>
-  </div>
-  <div v-else>
+
     <add-child class="btn btn-primary" :child="child" @save-child="saveChild" @cancel="showForm = false"></add-child>
-  </div>
+
+
 </template>
 
 <script>

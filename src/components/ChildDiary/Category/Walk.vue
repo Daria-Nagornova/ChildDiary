@@ -32,9 +32,11 @@ export default {
       const durationWalk = this.durationWalk
       this.$emit('save-walk', { startWalk, endWalk, durationWalk })
       this.cancel()
+      this.$router.push('/notesToday')
     },
     cancel () {
       this.$emit('cancel')
+      this.$router.push('/notesToday')
     }
   }
 }

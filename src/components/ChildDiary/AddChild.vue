@@ -1,6 +1,7 @@
 <template>
   <div class="addChild">
     <p>{{ prompt }}</p>
+
     <div>
       <div class="form-group">
         <label for="name">Имя</label>
@@ -30,6 +31,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'AddChild',
   props: ['child'],
@@ -48,9 +50,11 @@ export default {
       const gender = this.gender
       this.$emit('save-child', { name, dateOfBirth, gender })
       this.cancel()
+      this.$router.push('/notesToday')
     },
     cancel () {
       this.$emit('cancel')
+      this.$router.push('/notesToday')
     }
   }
 }
