@@ -1,14 +1,8 @@
 <template>
-  <header-diary class="headerDiary"></header-diary>
+  <header-diary class="headerDiary"><h1>Дневник ребенка</h1></header-diary>
   <notes-today></notes-today>
-  <div v-if="!showCategory" class="addNotes">
-    <button class="btn btn-primary" @click="showCategory = !showCategory">+ Добавить запись</button>
-  </div>
-  <div v-else>
-    <add-notes></add-notes>
-  </div>
-
-
+  <router-view></router-view>
+  <router-link to="/addNotes" class="btn btn-primary addNotes">+ Добавить запись</router-link>
 </template>
 
 <script>
@@ -51,7 +45,7 @@ export default {
 }
 .addNotes {
   margin-top: 350px;
-  margin-left: 500px;
+  margin-left: 550px;
 }
 
 

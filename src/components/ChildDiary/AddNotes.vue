@@ -1,29 +1,44 @@
 <template>
 
-  <div v-if="!showWalk">
+  <!--<div v-if="!showWalk">
     <walk :walk="walk" @save-walk="saveWalk" @cancel="showWalk = true"></walk>
   </div>
-  <div v-else class="container category">
+  <div v-else-if="!showFeeding">
+    <feeding :feeding="feeding" @save-feeding="saveFeeding" @cancel="showFeeding = true"></feeding>
+  </div>
+  <div v-else-if="!showHeight">
+    <height :height="height" @save-height="saveHeight" @cancel="showHeight = true"></height>
+  </div>
+  <div v-else-if="!showSleep">
+    <sleep :height="sleep" @save-sleep="saveSleep" @cancel="showSleep = true"></sleep>
+  </div>
+  <div v-else-if="!showTeeth">
+    <teeth :teeth="teeth" @save-teeth="saveTeeth" @cancel="showTeeth = true"></teeth>
+  </div>
+  <div v-else-if="!showVaccination">
+    <vaccination :vaccination="vaccination" @save-vaccination="vaccination" @cancel="showVaccination = true"></vaccination>
+  </div>-->
+  <div class="category">
     <div class="row">
       <div class="col">
-        <button class="btn btn-outline-info" @click="showWalk = !showWalk">Прогулка</button>
+        <router-link to="/walk" class="btn btn-outline-info button-category">Прогулка</router-link>
       </div>
       <div class="col">
-        <button class="btn btn-outline-info" @click="showSleep = !showSleep">Сон</button>
+        <router-link to="/sleep" class="btn btn-outline-info button-category">Сон</router-link>
       </div>
       <div class="col">
-        <button class="btn btn-outline-info" @click="showFeeding = !showFeeding">Кормление</button>
+        <router-link to="/feeding" class="btn btn-outline-info button-category">Кормление</router-link>
       </div>
     </div>
     <div class="row">
       <div class="col">
-        <button class="btn btn-outline-info" @click="showHeight = !showHeight">Рост и вес</button>
+        <router-link to="/height" class="btn btn-outline-info button-category">Рост и вес</router-link>
       </div>
       <div class="col">
-        <button class="btn btn-outline-info" @click="showVaccination = !showWalk">Прививка</button>
+        <router-link to="/vaccination" class="btn btn-outline-info button-category">Прививка</router-link>
       </div>
       <div class="col">
-        <button class="btn btn-outline-info" @click="showTeeth = !showTeeth">Зубы</button>
+        <router-link to="/teeth" class="btn btn-outline-info button-category">Зубы</router-link>
       </div>
     </div>
   </div>
@@ -31,17 +46,42 @@
 
 <script>
 import Walk from '@/components/ChildDiary/Category/Walk'
+import Feeding from '@/components/ChildDiary/Category/Feeding'
+import Height from '@/components/ChildDiary/Category/Height'
+import Sleep from '@/components/ChildDiary/Category/Sleep'
+import Teeth from "@/components/ChildDiary/Category/Teeth"
+import Vaccination from "./Category/Vaccination";
 
 export default {
   name: 'AddNotes',
-  components: { Walk },
+  components: { Vaccination, Teeth, Walk, Feeding, Height, Sleep },
   props: {
     walk: {
       type: Object,
       required: false
+    },
+    feeding: {
+      type: Object,
+      required: false
+    },
+    height: {
+      type: Object,
+      required: false
+    },
+    sleep: {
+      type: Object,
+      required: false
+    },
+    teeth: {
+      type: Object,
+      required: false
+    },
+    vaccination: {
+      type: Object,
+      required: false
     }
   },
-  data () {
+  /*data () {
     return {
       showWalk: true,
       showSleep: true,
@@ -54,13 +94,25 @@ export default {
   methods: {
     saveWalk (walk) {
       this.$emit('save-walk', walk)
-    }
-  }
+    },
+    saveFeeding (feeding) {
+      this.$emit('save-feeding', feeding)
+    },
+    saveHeight (height) {
+      this.$emit('save-height', height)
+    },
+    saveSleep (sleep) {
+      this.$emit('save-sleep', sleep)
+    },
+    saveTeeth (teeth) {
+      this.$emit('save-teeth', teeth)
+    },
+  }*/
 }
 </script>
 
 <style scoped>
-.category button {
+.button-category {
   width: 200px;
   height: 30px;
 }

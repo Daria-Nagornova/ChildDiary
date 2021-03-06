@@ -1,14 +1,18 @@
 <template>
   <div class="container">
-    <h1>ДНЕВНИК РЕБЕНКА</h1>
+    <slot></slot>
     <div class="row">
       <div class="col">
-        <child-diary :child="child" @save-child="child = $event"></child-diary>
+          <router-link to="/addChild" class="btn btn-primary">Добавить ребенка</router-link>
+          <span> {{ child.name }} </span>
+          <span>{{ child.dateOfBirth }} </span>
+          <span>{{ child.gender }}</span>
       </div>
       <div class="col">
-        <calendar></calendar>
+        <calendar>Выбрать дату</calendar>
       </div>
     </div>
+
   </div>
 </template>
 
