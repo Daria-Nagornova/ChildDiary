@@ -3,10 +3,14 @@
     <slot></slot>
     <div class="row">
       <div class="col">
+        <div v-if="!($store.state.showAddChild)">
           <router-link to="/addChild" class="btn btn-primary">Добавить ребенка</router-link>
-          <span> {{ child.name }} </span>
-          <span>{{ child.dateOfBirth }} </span>
-          <span>{{ child.gender }}</span>
+        </div>
+        <div class="child" v-else>
+          <span> {{ $store.getters.name }} </span>
+          <span>{{ $store.getters.dateOfBirth }} </span>
+          <span>{{ $store.getters.gender }}</span>
+        </div>
       </div>
       <div class="col">
         <calendar>Выбрать дату</calendar>
@@ -17,23 +21,20 @@
 </template>
 
 <script>
-import ChildDiary from '@/components/ChildDiary/ChildDiary'
 import Calendar from '@/components/ChildDiary/Calendar'
 export default {
 name: "HeaderDiary",
-  components: { ChildDiary, Calendar },
-  data() {
-    return {
-      child: {
-        name: '',
-        dateOfBirth: '',
-        gender: ''
-      }
-    }
-  }
+  components: { Calendar }
 }
 </script>
 
 <style scoped>
+.child span {
+  margin-right: 15px;
+  border-right-width:2px;
+  border-right-color: blue;
+  border-right-style: solid;
+  padding: 10px;
+}
 
 </style>

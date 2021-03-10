@@ -1,19 +1,51 @@
 <template>
-  <p>{{ todayDate }}</p>
-  <!--<div>
-    <span>Прогулка</span>
-    <span> Начало прогулки: {{ walk.startWalk }} </span>
-    <span> Конец прогулки: {{ walk.endWalk }} </span>
-    <span> Длительность: {{ walk.durationWalk }}</span>
-    <add-notes :walk="walk" @save-walk="walk = $event"></add-notes>
+    <div class="diary">
+      <div class="date">
+      <p v-if="dateNotes !== ''">{{ dateNotes }}</p>
+      <p v-else>{{ todayDate }}</p>
+      </div>
+      <div v-show="startWalk !== ''" class="walk">
+        <div>
+          <span>Прогулка</span>
+          <span> {{ startWalk }}-{{ endWalk }} </span>
+          <span>Длительность: {{ durationWalk }}минут </span>
+        </div>
+      </div>
+      <div v-show="nameVaccination !== ''" class="vaccination">
+        <div>
+          <span>Прививка</span>
+          <span> Наименование вакцины: {{ nameVaccination }}</span>
+          <span>Комментарий: {{ commentVaccination }}</span>
+        </div>
+      </div>
+      <div v-show="startSleep !== ''" class="sleep">
+        <div>
+          <span>Cон</span>
+          <span>{{ startSleep }}-{{ endSleep }}</span>
+          <span>Длительность: {{ durationSleep }}минут </span>
+          <span>{{ commentSleep }}</span>
+        </div>
+      </div>
+      <div v-show="childHeight !== ''" class="height">
+        <div>
+          <span>Рост и вес</span>
+          <span>{{ childHeight }}см {{ childWeight }}кг</span>
+        </div>
+      </div>
+      <div v-show="timeFeeding !== ''" class="feeding">
+        <div>
+          <span>Кормление</span>
+          <span>{{ timeFeeding }}</span>
+          <span>Продукты: {{ productsFeeding }}</span>
+        </div>
+      </div>
+      <div v-show="nameTeeth !== ''" class="teeth">
+        <div>
+          <span>Прорезывание зубов</span>
+          <span>{{ nameTeeth }} прорезался: {{ dateTeeth }}</span>
+        </div>
+      </div>
   </div>
-  <div>
-    <span>Кормление</span>
-    <span> Время приема пищи: {{ feeding.timeFeeding }} </span>
-    <span> Продукты: {{ feeding.productsFeeding }} </span>
-    <add-notes :feeding="feeding" @save-feeding="feeding = $event"></add-notes>
-  </div>-->
-
 </template>
 
 <script>
@@ -23,26 +55,115 @@ export default {
   components: {AddNotes},
   data () {
     return {
-     todayDate: '0' + (new Date()).getDate() + '-0' + ((new Date()).getMonth()+1) + '-' + (new Date()).getFullYear(),
-      walk: {
-        startWalk: '',
-        endWalk: '',
-        durationWalk: ''
-      },
-      feeding: {
-        timeFeeding: '',
-        productsFeeding: ''
-      }
+     todayDate: ''
     }
   },
-  methods: {
-
-    //getNewDate () {
-    //  return this.todayDate.getDate() + '-' + this.todayDate.getMonth() + '-' + this.todayDate.getFullYear()
+  computed: {
+    dateNotes() {
+      return this.$store.getters.dateNotes
+    },
+    timeFeeding() {
+      return this.$store.getters.timeFeeding
+    },
+    productsFeeding() {
+      return this.$store.getters.productsFeeding
+    },
+    childHeight() {
+      return this.$store.getters.childHeight
+    },
+    childWeight() {
+      return this.$store.getters.childWeight
+    },
+    startSleep() {
+      return this.$store.getters.startSleep
+    },
+    endSleep() {
+      return this.$store.getters.endSleep
+    },
+    durationSleep() {
+      return this.$store.getters.durationSleep
+    },
+    commentSleep() {
+      return this.$store.getters.commentSleep
+    },
+    nameTeeth() {
+      return this.$store.getters.nameTeeth
+    },
+    dateTeeth() {
+      return this.$store.getters.dateTeeth
+    },
+    nameVaccination() {
+      return this.$store.getters.nameVaccination
+    },
+    commentVaccination() {
+      return this.$store.getters.commentVaccination
+    },
+    startWalk() {
+      return this.$store.getters.startWalk
+    },
+    endWalk() {
+      return this.$store.getters.endWalk
+    },
+    durationWalk() {
+      return this.$store.getters.durationWalk
+    },
+    todayDate() {
+      return ((new Date()).getDate() + '-0' + ((new Date()).getMonth() + 1) + '-' + (new Date()).getFullYear())
+    }
   }
 }
 </script>
 
 <style scoped>
 
+.diary {
+  text-align: left;
+
+}
+.diary div {
+
+}
+.diary span {
+  margin-right: 15px;
+  border-right-width:2px;
+  border-right-color: rgb(190,190,190);
+  border-right-style: solid;
+  padding: 10px;
+}
+.walk, .height, .teeth, .vaccination, .sleep, .feeding {
+  background-color: lightblue;
+  height: 60px;
+  position: relative;
+  margin-top: 20px;
+
+}
+.walk div, .height div, .teeth div, .vaccination div, .sleep div, .feeding div {
+  margin-left: 25%;
+  margin-top: 20px;
+  position: absolute;
+}
+.height {
+  background-color: aquamarine;
+}
+.teeth {
+  background-color: cornflowerblue;
+}
+.vaccination {
+  background-color: plum;
+}
+.sleep{
+  background-color: mediumpurple;
+}
+.feeding {
+  background-color: skyblue;
+}
+.date {
+  margin: 20px auto;
+  width: 150px;
+  align-items: center;
+  border-bottom-width:2px;
+  border-bottom-color: blue;
+  border-bottom-style: solid;
+  text-align: center;
+}
 </style>
