@@ -1,10 +1,10 @@
 <template>
   <div>
-    <p>Кормление</p>
+    <p class="title">Кормление</p>
     <label for="timeFeeding">Время приема пищи</label>
-    <input class="form-control" type="time" v-model="timeFeeding">
+    <input class="form-control" type="time" v-model="$store.state.timeFeeding">
     <label for="productsFeeding">Продукты</label>
-    <input class="form-control" type="text" v-model="productsFeeding">
+    <input class="form-control" type="text" v-model="$store.state.productsFeeding">
   </div>
   <div>
     <button class="btn btn-primary" @click="save">Сохранить</button>
@@ -32,22 +32,12 @@ export default {
         }
     }
   },
-  data () {
-    return {
-      timeFeeding: '',
-      productsFeeding: ''
-    }
-  },
   methods: {
     save () {
-      const timeFeeding = this.timeFeeding
-      const productsFeeding = this.productsFeeding
-      this.$emit('save-feeding', { timeFeeding, productsFeeding })
       this.cancel()
       this.$router.push('/notesToday')
     },
     cancel () {
-      this.$emit('cancel')
       this.$router.push('/notesToday')
     }
   }
@@ -55,5 +45,7 @@ export default {
 </script>
 
 <style scoped>
-
+* {
+  margin: 10px;
+}
 </style>

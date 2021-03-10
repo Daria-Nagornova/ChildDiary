@@ -21,24 +21,24 @@
   <div class="category">
     <div class="row">
       <div class="col">
-        <router-link to="/walk" class="btn btn-outline-info button-category">Прогулка</router-link>
+        <router-link to="/walk" class="btn btn-outline-info button-category walk-icon">Прогулка</router-link>
       </div>
       <div class="col">
-        <router-link to="/sleep" class="btn btn-outline-info button-category">Сон</router-link>
+        <router-link to="/sleep" class="btn btn-outline-info button-category sleep-icon">Сон</router-link>
       </div>
       <div class="col">
-        <router-link to="/feeding" class="btn btn-outline-info button-category">Кормление</router-link>
+        <router-link to="/feeding" class="btn btn-outline-info button-category feeding-icon">Кормление</router-link>
       </div>
     </div>
     <div class="row">
       <div class="col">
-        <router-link to="/height" class="btn btn-outline-info button-category">Рост и вес</router-link>
+        <router-link to="/height" class="btn btn-outline-info button-category height-icon">Рост и вес</router-link>
       </div>
       <div class="col">
-        <router-link to="/vaccination" class="btn btn-outline-info button-category">Прививка</router-link>
+        <router-link to="/vaccination" class="btn btn-outline-info button-category vaccination-icon">Прививка</router-link>
       </div>
       <div class="col">
-        <router-link to="/teeth" class="btn btn-outline-info button-category">Зубы</router-link>
+        <router-link to="/teeth" class="btn btn-outline-info button-category teeth-icon">Зубы</router-link>
       </div>
     </div>
   </div>
@@ -80,34 +80,7 @@ export default {
       type: Object,
       required: false
     }
-  },
-  /*data () {
-    return {
-      showWalk: true,
-      showSleep: true,
-      showFeeding: true,
-      showHeight: true,
-      showVaccination: true,
-      showTeeth: true
-    }
-  },
-  methods: {
-    saveWalk (walk) {
-      this.$emit('save-walk', walk)
-    },
-    saveFeeding (feeding) {
-      this.$emit('save-feeding', feeding)
-    },
-    saveHeight (height) {
-      this.$emit('save-height', height)
-    },
-    saveSleep (sleep) {
-      this.$emit('save-sleep', sleep)
-    },
-    saveTeeth (teeth) {
-      this.$emit('save-teeth', teeth)
-    },
-  }*/
+  }
 }
 </script>
 
@@ -115,6 +88,9 @@ export default {
 .button-category {
   width: 200px;
   height: 30px;
+}
+.category {
+  margin: 50px;
 }
 .category .row {
   margin: 20px;

@@ -5,15 +5,15 @@
     <div>
       <div class="form-group">
         <label for="name">Имя</label>
-        <input class="form-control" type="text" v-model="name">
+        <input class="form-control" type="text" v-model="$store.state.name">
       </div>
       <div class="form-group">
         <label for="dateOfBirth">Дата рождения</label>
-        <input class="form-control" type="date" v-model="dateOfBirth">
+        <input class="form-control" type="date" v-model="$store.state.dateOfBirth">
       </div>
       <div class="form-group">
         <label for="gender">Пол ребенка</label>
-        <select class="form-control" v-model="gender">
+        <select class="form-control" v-model="$store.state.gender">
           <option value="женский">Женский</option>
           <option value="мужской">Мужской</option>
         </select>
@@ -35,20 +35,10 @@
 export default {
   name: 'AddChild',
   props: ['child'],
-  data () {
-    return {
-      name: '',
-      dateOfBirth: '',
-      gender: ''
-    }
-  },
   inject: ['prompt'],
   methods: {
     save () {
-      const name = this.name
-      const dateOfBirth = this.dateOfBirth
-      const gender = this.gender
-      this.$emit('save-child', { name, dateOfBirth, gender })
+      this.$store.state.showAddChild = true
       this.cancel()
       this.$router.push('/notesToday')
     },

@@ -8,9 +8,7 @@ import Teeth from "./components/ChildDiary/Category/Teeth";
 import Feeding from "./components/ChildDiary/Category/Feeding";
 import Height from "./components/ChildDiary/Category/Height";
 import Sleep from "./components/ChildDiary/Category/Sleep";
-import ErrorPage from "./components/ErrorPage";
-import App from "./App";
-import HeaderDiary from "./components/ChildDiary/HeaderDiary";
+import ErrorPage from "./components/ErrorPage";import ChildDiary from "./components/ChildDiary/ChildDiary";
 
 
 export default createRouter({
@@ -25,6 +23,6 @@ export default createRouter({
         { path: '/feeding', component: Feeding },
         { path: '/height', component: Height },
         { path: '/sleep', component: Sleep },
-        { path: '/:notFound(.*)', component: ErrorPage }
+      //  { path: '/:notFound(.*)', component: ErrorPage }
     ]
 })

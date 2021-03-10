@@ -1,14 +1,14 @@
 <template>
   <div>
-    <p>Сон</p>
+    <p class="title">Сон</p>
     <label for="startSleep">Начало сна</label>
-    <input v-onclick:[direction]="{background: commentSleep}" class="form-control" type="time" v-model="startSleep">
+    <input v-onclick:[direction]="{background: $store.state.commentSleep}" class="form-control" type="time" v-model="$store.state.startSleep">
     <label for="endSleep">Конец сна</label>
-    <input class="form-control" type="time" v-model="endSleep">
+    <input class="form-control" type="time" v-model="$store.state.endSleep">
     <label for="durationSleep">Длительность сна, минут</label>
-    <input class="form-control" type="text" v-model="durationSleep">
+    <input class="form-control" type="text" v-model="$store.state.durationSleep">
     <label for="commentSleep">Комментарий</label>
-    <input class="form-control" type="text" v-model="commentSleep">
+    <input class="form-control" type="text" v-model="$store.state.commentSleep">
   </div>
   <div>
     <button class="btn btn-primary" @click="save">Сохранить</button>
@@ -30,25 +30,15 @@ export default {
   props: ['sleep'],
   data () {
     return {
-      direction: 'background',
-      startSleep: '',
-      endSleep: '',
-      durationSleep: '',
-      commentSleep: ''
+      direction: 'background'
     }
   },
   methods: {
     save () {
-      const startSleep = this.startSleep
-      const endSleep = this.endSleep
-      const durationSleep = this.durationSleep
-      const commentSleep = this.commentSleep
-      this.$emit('save-sleep', { startSleep, endSleep, durationSleep, commentSleep })
       this.cancel()
       this.$router.push('/notesToday')
     },
     cancel () {
-      this.$emit('cancel')
       this.$router.push('/notesToday')
     }
   }
@@ -56,5 +46,7 @@ export default {
 </script>
 
 <style scoped>
-
+* {
+  margin: 10px;
+}
 </style>
