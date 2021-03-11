@@ -1,10 +1,12 @@
 <template>
   <div>
-    <p class="title">Привки</p>
+    <p class="title">Прививки</p>
     <label for="timeFeeding">Название вакцины</label>
-    <input class="form-control" type="text" v-model="$store.state.nameVaccination">
+    <input class="form-control" type="text" v-model="name">
+    <div class="error">{{ errorName }}</div>
     <label for="productsFeeding">Комментарий(как перенес ребенок)</label>
-    <input class="form-control" type="text" v-model="$store.state.commentVaccination">
+    <input class="form-control" type="text" v-model="comment">
+    <div class="error">{{ errorComment }}</div>
   </div>
   <div>
     <button class="btn btn-primary" @click="save">Сохранить</button>
@@ -16,11 +18,26 @@
 
 export default {
   name: "Vaccination",
-  props: ['vaccination'],
+  data() {
+    return {
+      comment: '',
+      name: '',
+      errorComment: '',
+      errorName: ''
+    }
+  },
   methods: {
     save () {
-      this.cancel()
-      this.$router.push('/notesToday')
+      if(this.name == '') {
+        this.errorName = "Введите наименование вакцины"
+      }
+      if(this.comment == '') {
+        this.errorComment = "Заполните поле"
+      }
+      if(this.name != '' && this.comment != ''){
+        this.$store.commit('saveVaccination', {nameVaccination: this.name, commentVaccination: this.comment})
+        this.cancel()
+      }
     },
     cancel () {
       this.$router.push('/notesToday')

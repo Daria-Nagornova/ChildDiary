@@ -7,9 +7,9 @@
           <router-link to="/addChild" class="btn btn-primary">Добавить ребенка</router-link>
         </div>
         <div class="child" v-else>
-          <span> {{ $store.getters.name }} </span>
-          <span>{{ $store.getters.dateOfBirth }} </span>
-          <span>{{ $store.getters.gender }}</span>
+          <span> {{ $store.getters.childName }} </span>
+          <span>{{ $store.getters.childDateOfBirth }} </span>
+          <span>{{ $store.getters.childGender }}</span>
         </div>
       </div>
       <div class="col">

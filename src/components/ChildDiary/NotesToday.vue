@@ -135,7 +135,7 @@ export default {
   height: 60px;
   position: relative;
   margin-top: 20px;
-
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 .walk div, .height div, .teeth div, .vaccination div, .sleep div, .feeding div {
   margin-left: 25%;
@@ -158,7 +158,7 @@ export default {
   background-color: skyblue;
 }
 .date {
-  margin: 20px auto;
+  margin: 40px auto;
   width: 150px;
   align-items: center;
   border-bottom-width:2px;
