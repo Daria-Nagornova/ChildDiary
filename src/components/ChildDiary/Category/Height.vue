@@ -2,9 +2,11 @@
   <div>
     <p class="title">Рост и вес</p>
     <label for="childHeight">Рост ребенка, см</label>
-    <input class="form-control" type="text" v-model="$store.state.childHeight">
+    <input class="form-control" type="text" v-model="height">
+    <div class="error">{{ errorHeight }}</div>
     <label for="childWeight">Вес ребенка, кг</label>
-    <input class="form-control" type="text" v-model="$store.state.childWeight">
+    <input class="form-control" type="text" v-model="weight">
+    <div class="error">{{ errorWeight }}</div>
   </div>
   <div>
     <button class="btn btn-primary" @click="save">Сохранить</button>
@@ -15,11 +17,32 @@
 <script>
 export default {
   name: "Height",
-  props: ['height'],
+  data(){
+    return {
+      height: '',
+      weight: '',
+      errorWeight: '',
+      errorHeight: ''
+    }
+  },
   methods: {
     save () {
-      this.cancel()
-      this.$router.push('/notesToday')
+      if(this.height == '') {
+        this.errorHeight = "Поле должно быть заполнено"
+      }
+      if(this.weight == '') {
+        this.errorWeight = "Поле должно быть заполнено"
+      }
+      if(this.weight != '' && isNaN(Number(this.weight))) {
+        this.errorWeight = "В это поле нужно ввести число"
+      }
+      if(this.height != '' && isNaN(Number(this.height))) {
+        this.errorHeight  = "В это поле нужно ввести число"
+      }
+      if(this.height != '' && this.weight != '' && !isNaN(Number(this.height)) &&!isNaN(Number(this.weight))) {
+        this.$store.commit('saveHeight', {childHeight: this.height, childWeight: this.weight})
+        this.cancel()
+      }
     },
     cancel () {
       this.$router.push('/notesToday')

@@ -18,9 +18,9 @@ export default createStore({
             timeFeeding: '',
             productsFeeding: '',
             dateNotes: '',
-            name: '',
-            dateOfBirth: '',
-            gender: '',
+            childName: '',
+            childDateOfBirth: '',
+            childGender: '',
             showAddChild: false,
             notesList: [
                   {
@@ -117,42 +117,75 @@ export default createStore({
           }
 },
 mutations: {
- selectNotes(state) {
-     state.startWalk = ''
-     state.endWalk = ''
-     state.durationWalk = ''
-     state.startSleep = ''
-     state.endSleep = ''
-     state.durationSleep = ''
-     state.commentSleep = ''
-     state.commentVaccination = ''
-     state.nameVaccination = ''
-     state.nameTeeth = ''
-     state.dateTeeth = ''
-     state.childHeight = ''
-     state.childWeight = ''
-     state.timeFeeding = ''
-     state.productsFeeding = ''
-     for (let note in state.notesList) {
-         if (String(state.dateNotes) == state.notesList[note].dateAdded) {
-             state.startWalk = state.notesList[note].walk.startWalk
-             state.endWalk = state.notesList[note].walk.endWalk
-             state.durationWalk = state.notesList[note].walk.durationWalk
-             state.startSleep = state.notesList[note].sleep.startSleep
-             state.endSleep = state.notesList[note].sleep.endSleep
-             state.durationSleep = state.notesList[note].sleep.durationSleep
-             state.commentSleep = state.notesList[note].sleep.commentSleep
-             state.commentVaccination = state.notesList[note].vaccination.commentVaccination
-             state.nameVaccination = state.notesList[note].vaccination.nameVaccination
-             state.nameTeeth = state.notesList[note].teeth.nameTeeth
-             state.dateTeeth = state.notesList[note].teeth.dateTeeth
-             state.childHeight = state.notesList[note].height.childHeight
-             state.childWeight = state.notesList[note].height.childWeight
-             state.timeFeeding = state.notesList[note].feeding.timeFeeding
-             state.productsFeeding = state.notesList[note].feeding.productsFeeding
+    saveWalk(state, payload) {
+        state.startWalk = payload.startWalk
+        state.endWalk = payload.endWalk
+        state.durationWalk = payload.durationWalk
+    },
+    saveFeeding(state, payload) {
+        state.timeFeeding = payload.timeFeeding
+        state.productsFeeding = payload.productsFeeding
+    },
+    saveSleep(state, payload) {
+        state.startSleep = payload.startSleep
+        state.endSleep = payload.endSleep
+        state.durationSleep = payload.durationSleep
+        state.commentSleep = payload.commentSleep
+    },
+    saveVaccination(state, payload) {
+        state.nameVaccination = payload.nameVaccination
+        state.nameTeeth = payload.nameTeeth
+    },
+    saveTeeth(state, payload) {
+        state.nameTeeth = payload.nameTeeth
+        state.dateTeeth = payload.dateTeeth
+    },
+    saveHeight(state, payload) {
+        state.childHeight = payload.childHeight
+        state.childWeight = payload.childWeight
+    },
+    saveChild(state, payload) {
+        state.childName = payload.childName
+        state.childDateOfBirth = payload.childDateOfBirth
+        state.childGender = payload.childGender
+        state.showAddChild = true
+    },
+     selectNotes(state) {
+         state.startWalk = ''
+         state.endWalk = ''
+         state.durationWalk = ''
+         state.startSleep = ''
+         state.endSleep = ''
+         state.durationSleep = ''
+         state.commentSleep = ''
+         state.commentVaccination = ''
+         state.nameVaccination = ''
+         state.nameTeeth = ''
+         state.dateTeeth = ''
+         state.childHeight = ''
+         state.childWeight = ''
+         state.timeFeeding = ''
+         state.productsFeeding = ''
+         for (let note in state.notesList) {
+             if (String(state.dateNotes) == state.notesList[note].dateAdded) {
+                 state.startWalk = state.notesList[note].walk.startWalk
+                 state.endWalk = state.notesList[note].walk.endWalk
+                 state.durationWalk = state.notesList[note].walk.durationWalk
+                 state.startSleep = state.notesList[note].sleep.startSleep
+                 state.endSleep = state.notesList[note].sleep.endSleep
+                 state.durationSleep = state.notesList[note].sleep.durationSleep
+                 state.commentSleep = state.notesList[note].sleep.commentSleep
+                 state.commentVaccination = state.notesList[note].vaccination.commentVaccination
+                 state.nameVaccination = state.notesList[note].vaccination.nameVaccination
+                 state.nameTeeth = state.notesList[note].teeth.nameTeeth
+                 state.dateTeeth = state.notesList[note].teeth.dateTeeth
+                 state.childHeight = state.notesList[note].height.childHeight
+                 state.childWeight = state.notesList[note].height.childWeight
+                 state.timeFeeding = state.notesList[note].feeding.timeFeeding
+                 state.productsFeeding = state.notesList[note].feeding.productsFeeding
+             }
          }
      }
- }
 },
 getters: {
     dateNotes(state) {
@@ -203,14 +236,14 @@ getters: {
         productsFeeding(state) {
         return state.productsFeeding
     },
-    name(state) {
-        return state.name
+    childName(state) {
+        return state.childName
     },
-    dateOfBirth(state) {
-        return state.dateOfBirth
+    childDateOfBirth(state) {
+        return state.childDateOfBirth
     },
-    gender(state) {
-        return state.gender
+    childGender(state) {
+        return state.childGender
     }
 }
 

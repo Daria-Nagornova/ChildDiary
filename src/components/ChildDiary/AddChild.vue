@@ -5,19 +5,22 @@
     <div>
       <div class="form-group">
         <label for="name">Имя</label>
-        <input class="form-control" type="text" v-model="$store.state.name">
+        <input class="form-control" type="text" v-model="name">
       </div>
+      <div class="error">{{ errorName }}</div>
       <div class="form-group">
         <label for="dateOfBirth">Дата рождения</label>
-        <input class="form-control" type="date" v-model="$store.state.dateOfBirth">
+        <input class="form-control" type="date" v-model="dateOfBirth">
       </div>
+      <div class="error">{{ errorDate }}</div>
       <div class="form-group">
         <label for="gender">Пол ребенка</label>
-        <select class="form-control" v-model="$store.state.gender">
+        <select class="form-control" v-model="gender">
           <option value="женский">Женский</option>
           <option value="мужской">Мужской</option>
         </select>
       </div>
+      <div class="error">{{ errorGender }}</div>
     </div>
     <div class="row">
       <div class="col">
@@ -35,15 +38,37 @@
 export default {
   name: 'AddChild',
   props: ['child'],
+  data() {
+    return {
+      name: '',
+      dateOfBirth: '',
+      gender: '',
+      errorName: '',
+      errorDate: '',
+      errorGender: ''
+    }
+  },
   inject: ['prompt'],
   methods: {
     save () {
-      this.$store.state.showAddChild = true
-      this.cancel()
-      this.$router.push('/notesToday')
+      /*const name = this.name
+      this.$emit('save-name', {name})*/
+      if(this.name == '') {
+        this.errorName = "Заполните поле"
+      }
+      if(this.dateOfBirth == '') {
+        this.errorDate = "Выберите дату"
+      }
+      if(this.gender == '') {
+        this.errorGender = "Выберите пол"
+      }
+      if(this.name != '' && this.dateOfBirth != '' && this.gender != ''){
+        this.$store.commit('saveChild', {childName: this.name, childDateOfBirth: this.dateOfBirth, childGender: this.gender})
+        this.cancel()
+      }
+
     },
     cancel () {
-      this.$emit('cancel')
       this.$router.push('/notesToday')
     }
   }

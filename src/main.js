@@ -7,12 +7,12 @@ import store from "./store"
 
 
 createApp(App)
+    .directive('new', {
+        created(elem) {
+            elem.style.background = 'red'
+        }
+    })
+    .component('calendar', Calendar)
     .use(router)
     .use(store)
     .mount('#app')
-App.component('calendar', Calendar)
-App.directive('change', {
-        mounted(elem) {
-            elem.style.background = '#AFEEEE'
-        }
-    })

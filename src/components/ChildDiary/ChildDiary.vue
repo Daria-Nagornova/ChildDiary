@@ -2,8 +2,9 @@
 
 
 
-    <add-child class="btn btn-primary" :child="child" @save-child="saveChild" @cancel="showForm = false"></add-child>
-
+    <add-child class="btn btn-primary" :child="child" @save-name="saveName"></add-child>
+    <div> Пропсы и валидация {{ child.name }}</div>
+  <div> Пропсы и валидация {{ age }}</div>
 
 </template>
 
@@ -12,20 +13,23 @@ import AddChild from "@/components/ChildDiary/AddChild"
 export default {
   name: 'ChildDiary',
   components: { AddChild },
-  props: {
-    child: {
-      type: Object,
-      required: true
-    }
+  props: {child: Object, age:
+        {
+          type: Number,
+          required: true,
+          validator: function(value){
+            return value >= 0 && value < 100;
+          }
+        }
   },
   data () {
     return {
-      showForm: false
+      showForm: false,
     }
   },
   methods: {
-    saveChild (child) {
-      this.$emit('save-child', child)
+    saveName (child) {
+      this.$emit('save-name', child)
     }
   }
 }

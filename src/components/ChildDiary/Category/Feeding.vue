@@ -2,9 +2,11 @@
   <div>
     <p class="title">Кормление</p>
     <label for="timeFeeding">Время приема пищи</label>
-    <input class="form-control" type="time" v-model="$store.state.timeFeeding">
+    <input class="form-control" type="time" v-model="time">
+    <div class="error">{{ errorTime }}</div>
     <label for="productsFeeding">Продукты</label>
-    <input class="form-control" type="text" v-model="$store.state.productsFeeding">
+    <input class="form-control" type="text" v-model="product">
+    <div class="error">{{ errorProducts }}</div>
   </div>
   <div>
     <button class="btn btn-primary" @click="save">Сохранить</button>
@@ -16,26 +18,26 @@
 
 export default {
   name: "Feeding",
-  props: {
-    timeFeeding: {
-      type: String,
-      required: true
-    },
-    productsFeeding: {
-      type: String,
-      required: true,
-        validator: function(value){
-          if (
-              value.length > 5
-          )
-          return value;
-        }
+  data() {
+    return {
+      time: '',
+      product: '',
+      errorTime: '',
+      errorProducts: ''
     }
   },
   methods: {
     save () {
-      this.cancel()
-      this.$router.push('/notesToday')
+      if(this.product == '') {
+        this.errorProducts = "Поле должно быть заполнено"
+      }
+      if(this.time == '') {
+        this.errorTime = "Выберите время кормления"
+      }
+      if(this.time != '' && this.product != ''){
+        this.$store.commit('saveFeeding', {timeFeeding: this.time, productsFeeding: this.product})
+        this.cancel()
+      }
     },
     cancel () {
       this.$router.push('/notesToday')

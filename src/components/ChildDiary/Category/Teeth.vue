@@ -1,49 +1,52 @@
 <template>
   <p class="title">Прорезывание зубов</p>
   <div>
-    <button class="btn btn-primary btn-teeth btn11" @click="$store.state.nameTeeth='Центральный верхний резец'"></button>
-    <button class="btn btn-primary btn-teeth btn11" @click="$store.state.nameTeeth='Центральный верхний резец'"></button>
+    <button class="btn btn-primary btn-teeth btn11" @click="name='Центральный верхний резец'"></button>
+    <button class="btn btn-primary btn-teeth btn11" @click="name='Центральный верхний резец'"></button>
   </div>
   <div>
-    <button class="btn btn-primary btn-teeth btn1" @click="$store.state.nameTeeth='Боковой верхний резец'"></button>
-    <button class="btn btn-primary btn-teeth btn1" @click="$store.state.nameTeeth='Боковой верхний резец'"></button>
+    <button class="btn btn-primary btn-teeth btn1" @click="name='Боковой верхний резец'"></button>
+    <button class="btn btn-primary btn-teeth btn1" @click="name='Боковой верхний резец'"></button>
   </div>
   <div>
-    <button class="btn btn-primary btn-teeth btn2" @click="$store.state.nameTeeth='Верхний клык'"></button>
-    <button class="btn btn-primary btn-teeth btn2" @click="$store.state.nameTeeth='Верхний клык'"></button>
+    <button class="btn btn-primary btn-teeth btn2" @click="name='Верхний клык'"></button>
+    <button class="btn btn-primary btn-teeth btn2" @click="name='Верхний клык'"></button>
   </div>
   <div>
-    <button class="btn btn-primary btn-teeth btn3" @click="$store.state.nameTeeth='Верхний первый моляр'"></button>
-    <button class="btn btn-primary btn-teeth btn3" @click="$store.state.nameTeeth='Верхний первый моляр'"></button>
+    <button class="btn btn-primary btn-teeth btn3" @click="name='Верхний первый моляр'"></button>
+    <button class="btn btn-primary btn-teeth btn3" @click="name='Верхний первый моляр'"></button>
   </div>
   <div>
-    <button class="btn btn-primary btn-teeth btn4" @click="$store.state.nameTeeth='Верхний второй моляр'"></button>
-    <button class="btn btn-primary btn-teeth btn4" @click="$store.state.nameTeeth='Верхний второй моляр'"></button>
+    <button class="btn btn-primary btn-teeth btn4" @click="name='Верхний второй моляр'"></button>
+    <button class="btn btn-primary btn-teeth btn4" @click="name='Верхний второй моляр'"></button>
   </div>
 
   <div>
-  <button class="btn btn-primary btn-teeth btn16" @click="$store.state.nameTeeth='Нижний второй моляр'"></button>
-  <button class="btn btn-primary btn-teeth btn16" @click="$store.state.nameTeeth='Нижний второй моляр'"></button>
+  <button class="btn btn-primary btn-teeth btn16" @click="name='Нижний второй моляр'"></button>
+  <button class="btn btn-primary btn-teeth btn16" @click="name='Нижний второй моляр'"></button>
   </div>
   <div>
-    <button class="btn btn-primary btn-teeth btn12" @click="$store.state.nameTeeth='Нижний первый моляр'"></button>
-    <button class="btn btn-primary btn-teeth btn12" @click="$store.state.nameTeeth='Нижний первый моляр'"></button>
+    <button class="btn btn-primary btn-teeth btn12" @click="name='Нижний первый моляр'"></button>
+    <button class="btn btn-primary btn-teeth btn12" @click="name='Нижний первый моляр'"></button>
   </div>
   <div>
-    <button class="btn btn-primary btn-teeth btn13" @click="$store.state.nameTeeth='Нижний клык'"></button>
-    <button class="btn btn-primary btn-teeth btn13" @click="$store.state.nameTeeth='Нижний клык'"></button>
+    <button class="btn btn-primary btn-teeth btn13" @click="name='Нижний клык'"></button>
+    <button class="btn btn-primary btn-teeth btn13" @click="name='Нижний клык'"></button>
   </div>
   <div>
-    <button class="btn btn-primary btn-teeth btn14" @click="$store.state.nameTeeth='Боковой нижний резец'"></button>
-    <button class="btn btn-primary btn-teeth btn14" @click="$store.state.nameTeeth='Боковой нижний резец'"></button>
+    <button class="btn btn-primary btn-teeth btn14" @click="name='Боковой нижний резец'"></button>
+    <button class="btn btn-primary btn-teeth btn14" @click="name='Боковой нижний резец'"></button>
   </div>
   <div>
-    <button class="btn btn-primary btn-teeth btn15" @click="$store.state.nameTeeth='Центральный нижний резец'"></button>
-    <button class="btn btn-primary btn-teeth btn15" @click="$store.state.nameTeeth='Центральный нижний резец'"></button>
+    <button class="btn btn-primary btn-teeth btn15" @click="name='Центральный нижний резец'"></button>
+    <button class="btn btn-primary btn-teeth btn15" @click="name='Центральный нижний резец'"></button>
   </div>
-  <label class="elem-margin">{{ $store.state.nameTeeth }} прорезался:</label>
-  <input class="form-control elem-margin" type="date" v-model="$store.state.dateTeeth">
-  <div></div>
+  <div class="error">{{ errorTeeth }}</div>
+  <div>
+    <label class="elem-margin">{{ name }} прорезался:</label>
+    <input class="form-control elem-margin" type="date" v-model="date">
+  </div>
+  <div class="error">{{ errorDate }}</div>
   <div>
     <button class="btn btn-primary elem-margin" @click="save">Сохранить</button>
     <button class="btn btn-primary elem-margin" @click="cancel">Отменить</button>
@@ -53,11 +56,26 @@
 <script>
 export default {
   name: "Teeth",
-  props: ['teeth'],
+  data() {
+    return {
+      date: '',
+      name: '',
+      errorDate: '',
+      errorTeeth: ''
+    }
+  },
   methods: {
     save () {
-      this.cancel()
-      this.$router.push('/notesToday')
+      if(this.name == '') {
+        this.errorTeeth = "Нужно выбрать зуб!"
+      }
+      if(this.date == '') {
+        this.errorDate = "Выберите дату"
+      }
+      if(this.name != '' && this.date != ''){
+        this.$store.commit('saveTeeth', {nameTeeth: this.name, dateTeeth: this.date})
+        this.cancel()
+      }
     },
     cancel () {
       this.$router.push('/notesToday')

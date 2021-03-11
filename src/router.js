@@ -23,6 +23,6 @@ export default createRouter({
         { path: '/feeding', component: Feeding },
         { path: '/height', component: Height },
         { path: '/sleep', component: Sleep },
-      //  { path: '/:notFound(.*)', component: ErrorPage }
+     // { path: '/:notFound(.*)', component: ErrorPage }
     ]
 })
