@@ -4,6 +4,9 @@
       <p v-if="dateNotes !== ''">{{ dateNotes }}</p>
       <p v-else>{{ todayDate }}</p>
       </div>
+      <button type="button" class="close" @click="delete">
+        <span>&times;</span>
+      </button>
       <div v-show="startWalk !== ''" class="walk">
         <div>
           <span>Прогулка</span>
@@ -49,64 +52,43 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import AddNotes from "@/components/ChildDiary/AddNotes";
 export default {
   name: "NotesToday",
   components: {AddNotes},
-  data () {
-    return {
-     todayDate: ''
+  created() {
+    this.loadList()
+  },
+  methods: {
+    loadList() {
+      this.$store.dispatch('load')
+    },
+    delete() {
+      this.$store.dispatch('delete')
     }
   },
   computed: {
-    dateNotes() {
-      return this.$store.getters.dateNotes
-    },
-    timeFeeding() {
-      return this.$store.getters.timeFeeding
-    },
-    productsFeeding() {
-      return this.$store.getters.productsFeeding
-    },
-    childHeight() {
-      return this.$store.getters.childHeight
-    },
-    childWeight() {
-      return this.$store.getters.childWeight
-    },
-    startSleep() {
-      return this.$store.getters.startSleep
-    },
-    endSleep() {
-      return this.$store.getters.endSleep
-    },
-    durationSleep() {
-      return this.$store.getters.durationSleep
-    },
-    commentSleep() {
-      return this.$store.getters.commentSleep
-    },
-    nameTeeth() {
-      return this.$store.getters.nameTeeth
-    },
-    dateTeeth() {
-      return this.$store.getters.dateTeeth
-    },
-    nameVaccination() {
-      return this.$store.getters.nameVaccination
-    },
-    commentVaccination() {
-      return this.$store.getters.commentVaccination
-    },
-    startWalk() {
-      return this.$store.getters.startWalk
-    },
-    endWalk() {
-      return this.$store.getters.endWalk
-    },
-    durationWalk() {
-      return this.$store.getters.durationWalk
-    },
+    ...mapGetters([
+      'dateNotes',
+      'timeFeeding',
+      'productsFeeding',
+      'childHeight',
+      'childWeight',
+      'startSleep',
+      'endSleep',
+      'durationSleep',
+      'commentSleep',
+      'nameTeeth',
+      'dateTeeth',
+      'nameVaccination',
+      'commentVaccination',
+      'startWalk',
+      'endWalk',
+      'durationWalk',
+      'arr',
+      'notesList'
+    ]),
     todayDate() {
       return ((new Date()).getDate() + '-0' + ((new Date()).getMonth() + 1) + '-' + (new Date()).getFullYear())
     }
@@ -165,5 +147,14 @@ export default {
   border-bottom-color: blue;
   border-bottom-style: solid;
   text-align: center;
+}
+.close {
+  margin-right: 50px;
+  margin-top: -30px;
+  font-weight: 4000;
+  border: none;
+}
+.close span {
+  border: none;
 }
 </style>
