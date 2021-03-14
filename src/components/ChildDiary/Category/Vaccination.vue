@@ -35,7 +35,8 @@ export default {
         this.errorComment = "Заполните поле"
       }
       if(this.name != '' && this.comment != ''){
-        this.$store.commit('saveVaccination', {nameVaccination: this.name, commentVaccination: this.comment})
+        this.$store.dispatch('load')
+        this.$store.dispatch('addVaccination', {nameVaccination: this.name, commentVaccination: this.comment})
         this.cancel()
       }
     },

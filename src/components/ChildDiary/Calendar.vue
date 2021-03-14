@@ -5,7 +5,7 @@
     </button>
   </div>
   <div v-else>
-    <input class="form-control" type="date" v-model="$store.state.dateNotes" @change="selectNotes">
+    <input class="form-control" type="date" v-model="date" @change="selectNotes">
   </div>
 
 </template>
@@ -14,11 +14,15 @@
 import {switchButton} from '@/components/ChildDiary/mixins/SwitchButton'
 export default {
   name: "Calendar",
-  props: ['calendar'],
   mixins: [ switchButton ],
+  data() {
+    return {
+      date: ''
+    }
+  },
   methods: {
     selectNotes() {
-      this.$store.commit('selectNotes')
+      this.$store.commit('selectNotes', {dateNotes: this.date})
       this.$router.push('/notesToday')
     }
   }

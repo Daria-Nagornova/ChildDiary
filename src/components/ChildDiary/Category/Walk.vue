@@ -9,7 +9,7 @@
     <div class="error">{{ errorEnd }}</div>
     <label for="durationWalk">Длительность прогулки, минут</label>
     <input class="form-control" type="text" v-model="duration">
-
+    <div class="error">{{ errorDuration }}</div>
   </div>
   <div>
     <button class="btn btn-primary" @click="save">Сохранить</button>
