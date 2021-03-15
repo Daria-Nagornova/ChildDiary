@@ -23,10 +23,17 @@ export default {
       comment: '',
       name: '',
       errorComment: '',
-      errorName: ''
+      errorName: '',
+      path: 'vaccination'
     }
   },
+  created() {
+    this.loadList()
+  },
   methods: {
+    loadList() {
+      this.$store.dispatch('load')
+    },
     save () {
       if(this.name == '') {
         this.errorName = "Введите наименование вакцины"
@@ -35,7 +42,6 @@ export default {
         this.errorComment = "Заполните поле"
       }
       if(this.name != '' && this.comment != ''){
-        this.$store.dispatch('load')
         this.$store.dispatch('addVaccination', {nameVaccination: this.name, commentVaccination: this.comment})
         this.cancel()
       }

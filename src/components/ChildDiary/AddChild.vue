@@ -63,7 +63,8 @@ export default {
         this.errorGender = "Выберите пол"
       }
       if(this.name != '' && this.dateOfBirth != '' && this.gender != ''){
-        this.$store.commit('saveChild', {childName: this.name, childDateOfBirth: this.dateOfBirth, childGender: this.gender})
+        this.$store.dispatch('addChild', {childName: this.name, childDateOfBirth: this.dateOfBirth, childGender: this.gender})
+        this.$store.dispatch('loadChild')
         this.cancel()
       }
 

@@ -26,7 +26,13 @@ export default {
       errorProducts: ''
     }
   },
+  created() {
+    this.loadList()
+  },
   methods: {
+    loadList() {
+      this.$store.dispatch('load')
+    },
     save () {
       if(this.product == '') {
         this.errorProducts = "Поле должно быть заполнено"
@@ -35,7 +41,7 @@ export default {
         this.errorTime = "Выберите время кормления"
       }
       if(this.time != '' && this.product != ''){
-        this.$store.commit('saveFeeding', {timeFeeding: this.time, productsFeeding: this.product})
+        this.$store.dispatch('addFeeding', {timeFeeding: this.time, productsFeeding: this.product})
         this.cancel()
       }
     },

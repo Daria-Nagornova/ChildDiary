@@ -1,23 +1,4 @@
 <template>
-
-  <!--<div v-if="!showWalk">
-    <walk :walk="walk" @save-walk="saveWalk" @cancel="showWalk = true"></walk>
-  </div>
-  <div v-else-if="!showFeeding">
-    <feeding :feeding="feeding" @save-feeding="saveFeeding" @cancel="showFeeding = true"></feeding>
-  </div>
-  <div v-else-if="!showHeight">
-    <height :height="height" @save-height="saveHeight" @cancel="showHeight = true"></height>
-  </div>
-  <div v-else-if="!showSleep">
-    <sleep :height="sleep" @save-sleep="saveSleep" @cancel="showSleep = true"></sleep>
-  </div>
-  <div v-else-if="!showTeeth">
-    <teeth :teeth="teeth" @save-teeth="saveTeeth" @cancel="showTeeth = true"></teeth>
-  </div>
-  <div v-else-if="!showVaccination">
-    <vaccination :vaccination="vaccination" @save-vaccination="vaccination" @cancel="showVaccination = true"></vaccination>
-  </div>-->
   <div class="category">
     <div class="row">
       <div class="col">
@@ -54,33 +35,7 @@ import Vaccination from "./Category/Vaccination";
 
 export default {
   name: 'AddNotes',
-  components: { Vaccination, Teeth, Walk, Feeding, Height, Sleep },
-  props: {
-    walk: {
-      type: Object,
-      required: false
-    },
-    feeding: {
-      type: Object,
-      required: false
-    },
-    height: {
-      type: Object,
-      required: false
-    },
-    sleep: {
-      type: Object,
-      required: false
-    },
-    teeth: {
-      type: Object,
-      required: false
-    },
-    vaccination: {
-      type: Object,
-      required: false
-    }
-  }
+  components: { Vaccination, Teeth, Walk, Feeding, Height, Sleep }
 }
 </script>
 

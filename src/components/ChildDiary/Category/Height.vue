@@ -25,7 +25,13 @@ export default {
       errorHeight: ''
     }
   },
+  created() {
+    this.loadList()
+  },
   methods: {
+    loadList() {
+      this.$store.dispatch('load')
+    },
     save () {
       if(this.height == '') {
         this.errorHeight = "Поле должно быть заполнено"
@@ -40,7 +46,7 @@ export default {
         this.errorHeight  = "В это поле нужно ввести число"
       }
       if(this.height != '' && this.weight != '' && !isNaN(Number(this.height)) &&!isNaN(Number(this.weight))) {
-        this.$store.commit('saveHeight', {childHeight: this.height, childWeight: this.weight})
+        this.$store.dispatch('addHeight', {childHeight: this.height, childWeight: this.weight})
         this.cancel()
       }
     },

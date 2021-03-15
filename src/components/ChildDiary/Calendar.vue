@@ -20,9 +20,16 @@ export default {
       date: ''
     }
   },
+  updated() {
+    this.loadList()
+  },
   methods: {
+    loadList() {
+      this.$store.dispatch('load')
+    },
     selectNotes() {
       this.$store.commit('selectNotes', {dateNotes: this.date})
+      this.$store.commit('getShowClose')
       this.$router.push('/notesToday')
     }
   }

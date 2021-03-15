@@ -20,6 +20,7 @@ export default {
             notesList: '',
             date: '',
             n: 0,
+            showClose: '',
             empty:
                 {
                     "dateAdded": ((new Date()).getFullYear() + '-0' + ((new Date()).getMonth() + 1) + '-' + (new Date()).getDate()),
@@ -34,46 +35,49 @@ export default {
                     "childWeight": ""},
                     "feeding": {"timeFeeding": "",
                     "productsFeeding": ""},
-                    "vaccination": {"nameVaccination": "прапр",
-                    "commentVaccination": "апар"},
+                    "vaccination": {"nameVaccination": "",
+                    "commentVaccination": ""},
                     "teeth": {"nameTeeth": "",
                     "dateTeeth": ""}
                 }
         }
     },
     mutations: {
-        saveWalk(state, payload) {
-            state.startWalk = payload.startWalk
-            state.endWalk = payload.endWalk
-            state.durationWalk = payload.durationWalk
+        saveWalk(state, walk) {
+            state.startWalk = walk.startWalk
+            state.endWalk = walk.endWalk
+            state.durationWalk = walk.durationWalk
         },
-        saveFeeding(state, payload) {
-            state.timeFeeding = payload.timeFeeding
-            state.productsFeeding = payload.productsFeeding
+        saveFeeding(state, feeding) {
+            state.timeFeeding = feeding.timeFeeding
+            state.productsFeeding = feeding.productsFeeding
         },
-        saveSleep(state, payload) {
-            state.startSleep = payload.startSleep
-            state.endSleep = payload.endSleep
-            state.durationSleep = payload.durationSleep
-            state.commentSleep = payload.commentSleep
+        saveSleep(state, sleep) {
+            state.startSleep = sleep.startSleep
+            state.endSleep = sleep.endSleep
+            state.durationSleep = sleep.durationSleep
+            state.commentSleep = sleep.commentSleep
         },
         saveVaccination(state, vaccination) {
             state.nameVaccination = vaccination.nameVaccination
             state.commentVaccination = vaccination.commentVaccination
         },
-        saveTeeth(state, payload) {
-            state.nameTeeth = payload.nameTeeth
-            state.dateTeeth = payload.dateTeeth
+        saveTeeth(state, teeth) {
+            state.nameTeeth = teeth.nameTeeth
+            state.dateTeeth = teeth.dateTeeth
         },
-        saveHeight(state, payload) {
-            state.childHeight = payload.childHeight
-            state.childWeight = payload.childWeight
+        saveHeight(state, height) {
+            state.childHeight = height.childHeight
+            state.childWeight = height.childWeight
         },
         new(state, notes) {
             state.notesList = notes
         },
         getDate(state) {
             state.date = ((new Date()).getFullYear() + '-0' + ((new Date()).getMonth() + 1) + '-' + (new Date()).getDate())
+        },
+        getShowClose(state) {
+            state.showClose = true
         },
         selectNotes(state, payload) {
             state.startWalk = ''
@@ -120,17 +124,18 @@ export default {
             const notes = data
             commit('new', notes)
         },
-        async delete({state}) {
+        async delete({state, commit, dispatch}) {
             for (let note in state.notesList) {
                 if (state.notesList[note].dateAdded == state.dateNotes) {
                     await axios.delete(`https://child-diary-default-rtdb.firebaseio.com/notes/${note}.json`)
                 }
             }
+            dispatch('load')
+            commit('selectNotes', state.dateNotes)
         },
         async addVaccination({commit, state}, vaccination) {
             commit('getDate')
             commit('saveVaccination', vaccination)
-
             for (let note in state.notesList) {
                 if (state.notesList[note].dateAdded == state.date) {
                     state.notesList[note].vaccination.commentVaccination = state.commentVaccination
@@ -146,6 +151,120 @@ export default {
             if(state.n == Object.keys(state.notesList).length) {
                 state.empty.vaccination.commentVaccination = state.commentVaccination
                 state.empty.vaccination.nameVaccination = state.nameVaccination
+                await axios.post('https://child-diary-default-rtdb.firebaseio.com/notes.json', state.empty)
+            }
+        },
+        async addTeeth({commit, state}, teeth) {
+            commit('getDate')
+            commit('saveTeeth', teeth)
+            for (let note in state.notesList) {
+                if (state.notesList[note].dateAdded == state.date) {
+                    state.notesList[note].teeth.nameTeeth = state.nameTeeth
+                    state.notesList[note].teeth.dateTeeth = state.dateTeeth
+                    const key = note
+                    await axios.post('https://child-diary-default-rtdb.firebaseio.com/notes.json', state.notesList[key])
+                    await axios.delete(`https://child-diary-default-rtdb.firebaseio.com/notes/${key}.json`)
+                    break
+                }
+                else {
+                    state.n++
+                }
+            }
+            if(state.n == Object.keys(state.notesList).length) {
+                state.empty.teeth.nameTeeth = state.nameTeeth
+                state.empty.teeth.dateTeeth = state.dateTeeth
+                await axios.post('https://child-diary-default-rtdb.firebaseio.com/notes.json', state.empty)
+            }
+        },
+        async addWalk({commit, state}, walk) {
+            commit('getDate')
+            commit('saveWalk', walk)
+            for (let note in state.notesList) {
+                if (state.notesList[note].dateAdded == state.date) {
+                    state.notesList[note].walk.startWalk = walk.startWalk
+                    state.notesList[note].walk.endWalk = walk.endWalk
+                    state.notesList[note].walk.durationWalk = walk.durationWalk
+                    const key = note
+                    await axios.post('https://child-diary-default-rtdb.firebaseio.com/notes.json', state.notesList[key])
+                    await axios.delete(`https://child-diary-default-rtdb.firebaseio.com/notes/${key}.json`)
+                    break
+                }
+                else {
+                    state.n++
+                }
+            }
+            if(state.n == Object.keys(state.notesList).length) {
+                state.empty.walk.startWalk = state.startWalk
+                state.empty.walk.endWalk = state.endWalk
+                state.empty.walk.durationWalk = state.durationWalk
+                await axios.post('https://child-diary-default-rtdb.firebaseio.com/notes.json', state.empty)
+            }
+        },
+        async addSleep({commit, state}, sleep) {
+            commit('getDate')
+            commit('saveSleep', sleep)
+            for (let note in state.notesList) {
+                if (state.notesList[note].dateAdded == state.date) {
+                    state.notesList[note].sleep.startSleep = sleep.startSleep
+                    state.notesList[note].sleep.endSleep = sleep.endSleep
+                    state.notesList[note].sleep.durationSleep = sleep.durationSleep
+                    state.notesList[note].sleep.commentSleep = sleep.commentSleep
+                    const key = note
+                    await axios.post('https://child-diary-default-rtdb.firebaseio.com/notes.json', state.notesList[key])
+                    await axios.delete(`https://child-diary-default-rtdb.firebaseio.com/notes/${key}.json`)
+                    break
+                }
+                else {
+                    state.n++
+                }
+            }
+            if(state.n == Object.keys(state.notesList).length) {
+                state.empty.sleep.startSleep = state.startSleep
+                state.empty.sleep.endSleep = state.endSleep
+                state.empty.sleep.durationSleep = state.durationSleep
+                state.empty.sleep.commentSleep = state.commentSleep
+                await axios.post('https://child-diary-default-rtdb.firebaseio.com/notes.json', state.empty)
+            }
+        },
+        async addFeeding({commit, state}, feeding) {
+            commit('getDate')
+            commit('saveFeeding', feeding)
+            for (let note in state.notesList) {
+                if (state.notesList[note].dateAdded == state.date) {
+                    state.notesList[note].feeding.timeFeeding = state.timeFeeding
+                    state.notesList[note].feeding.productsFeeding = state.productsFeeding
+                    const key = note
+                    await axios.post('https://child-diary-default-rtdb.firebaseio.com/notes.json', state.notesList[key])
+                    await axios.delete(`https://child-diary-default-rtdb.firebaseio.com/notes/${key}.json`)
+                }
+                else {
+                    state.n++
+                }
+            }
+            if(state.n == Object.keys(state.notesList).length) {
+                state.empty.feeding.timeFeeding = state.timeFeeding
+                state.empty.feeding.productsFeeding = state.productsFeeding
+                await axios.post('https://child-diary-default-rtdb.firebaseio.com/notes.json', state.empty)
+            }
+        },
+        async addHeight({commit, state}, height) {
+            commit('getDate')
+            commit('saveHeight', height)
+            for (let note in state.notesList) {
+                if (state.notesList[note].dateAdded == state.date) {
+                    state.notesList[note].height.childHeight = state.childHeight
+                    state.notesList[note].height.childWeight = state.childWeight
+                    const key = note
+                    await axios.post('https://child-diary-default-rtdb.firebaseio.com/notes.json', state.notesList[key])
+                    await axios.delete(`https://child-diary-default-rtdb.firebaseio.com/notes/${key}.json`)
+                }
+                else {
+                    state.n++
+                }
+            }
+            if(state.n == Object.keys(state.notesList).length) {
+                state.empty.height.childHeight = state.childHeight
+                state.empty.height.childWeight = state.childWeight
                 await axios.post('https://child-diary-default-rtdb.firebaseio.com/notes.json', state.empty)
             }
         }
@@ -198,6 +317,9 @@ export default {
         },
         productsFeeding(state) {
             return state.productsFeeding
+        },
+        showClose(state) {
+            return state.showClose
         }
     }
 }
