@@ -6,10 +6,10 @@
         <div v-if="!(showAddChild)">
           <router-link to="/addChild" class="btn btn-primary">Добавить ребенка</router-link>
         </div>
-        <div class="child" v-else>
-          <span> {{ childName }} </span>
-          <span>{{ childDateOfBirth }} </span>
-          <span>{{ childGender }}</span>
+        <div v-for="children in child" class="child" v-else v-once>
+          <span> {{ children.childName }} </span>
+          <span>{{ children.childDateOfBirth }} </span>
+          <span>{{ children.childGender }}</span>
         </div>
       </div>
       <div class="col">
@@ -21,13 +21,14 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from 'vuex'
 import Calendar from '@/components/ChildDiary/Calendar'
 export default {
 name: "HeaderDiary",
   components: { Calendar },
   computed: {
     ...mapGetters([
+        'child',
         'childName',
         'childDateOfBirth',
         'childGender',

@@ -4,15 +4,25 @@ export default {
             childName: '',
             childDateOfBirth: '',
             childGender: '',
+            child: [],
             showAddChild: false
         }
     },
     mutations: {
-        saveChild(state, payload) {
-            state.childName = payload.childName
-            state.childDateOfBirth = payload.childDateOfBirth
-            state.childGender = payload.childGender
-            state.showAddChild = true
+        saveChild(state, childData) {
+           state.child = childData
+           state.showAddChild = true
+        }
+    },
+    actions: {
+        async loadChild({commit}) {
+            const {data} = await axios.get('https://child-diary-default-rtdb.firebaseio.com/child.json')
+            const childData = data
+            console.log(childData)
+            commit('saveChild', childData)
+        },
+        async addChild({context, commit}, child) {
+            await axios.post('https://child-diary-default-rtdb.firebaseio.com/child.json',child)
         }
     },
     getters: {
@@ -27,6 +37,9 @@ export default {
         },
         childGender(state) {
             return state.childGender
+        },
+        child(state) {
+            return state.child
         }
     }
 }

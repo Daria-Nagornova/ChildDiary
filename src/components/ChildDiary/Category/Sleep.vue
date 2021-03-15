@@ -31,7 +31,6 @@ export default {
       }
     }
   },
-  props: ['sleep'],
   data () {
     return {
       direction: 'background',
@@ -45,7 +44,13 @@ export default {
       errorComment: ''
     }
   },
+  created() {
+    this.loadList()
+  },
   methods: {
+    loadList() {
+      this.$store.dispatch('load')
+    },
     save () {
       if(this.start == '') {
         this.errorStart = "Укажите время начала сна"
@@ -63,7 +68,7 @@ export default {
         this.errorDuration = "В это поле нужно ввести число"
       }
       if(this.start != '' && this.end != '' && this.duration != '' && this.comment != '' && !isNaN(Number(this.duration))) {
-        this.$store.commit('saveSleep', {startSleep: this.start, endSleep: this.end, durationSleep: this.duration, commentSleep: this.comment})
+        this.$store.dispatch('addSleep', {startSleep: this.start, endSleep: this.end, durationSleep: this.duration, commentSleep: this.comment})
         this.cancel()
       }
     },

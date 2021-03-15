@@ -64,7 +64,13 @@ export default {
       errorTeeth: ''
     }
   },
+  created() {
+    this.loadList()
+  },
   methods: {
+    loadList() {
+      this.$store.dispatch('load')
+    },
     save () {
       if(this.name == '') {
         this.errorTeeth = "Нужно выбрать зуб!"
@@ -73,7 +79,7 @@ export default {
         this.errorDate = "Выберите дату"
       }
       if(this.name != '' && this.date != ''){
-        this.$store.commit('saveTeeth', {nameTeeth: this.name, dateTeeth: this.date})
+        this.$store.dispatch('addTeeth', {nameTeeth: this.name, dateTeeth: this.date})
         this.cancel()
       }
     },

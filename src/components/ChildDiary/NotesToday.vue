@@ -4,7 +4,7 @@
       <p v-if="dateNotes !== ''">{{ dateNotes }}</p>
       <p v-else>{{ todayDate }}</p>
       </div>
-      <button type="button" class="close" @click="delete">
+      <button v-if="showClose" type="button" class="close" @click="delete">
         <span>&times;</span>
       </button>
       <div v-show="startWalk !== ''" class="walk">
@@ -70,6 +70,7 @@ export default {
   },
   computed: {
     ...mapGetters([
+      'showClose',
       'dateNotes',
       'timeFeeding',
       'productsFeeding',

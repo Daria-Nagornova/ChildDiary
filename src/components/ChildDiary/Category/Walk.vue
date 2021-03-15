@@ -30,7 +30,13 @@ export default {
       errorDuration: '',
     }
   },
+  created() {
+    this.loadList()
+  },
   methods: {
+    loadList() {
+      this.$store.dispatch('load')
+    },
     save () {
       if(this.start == '') {
         this.errorStart = "Укажите время начала прогулки"
@@ -45,7 +51,7 @@ export default {
         this.errorDuration = "В это поле нужно ввести число"
       }
       if(this.start != '' && this.end != '' && this.duration != '' && !isNaN(Number(this.duration))) {
-        this.$store.commit('saveWalk', {startWalk: this.start, endWalk: this.end, durationWalk: this.duration})
+        this.$store.dispatch('addWalk', {startWalk: this.start, endWalk: this.end, durationWalk: this.duration})
         this.cancel()
       }
     },
